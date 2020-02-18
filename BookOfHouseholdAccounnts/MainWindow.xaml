@@ -1,0 +1,113 @@
+﻿<Window x:Class="BookOfHouseholdAccounnts.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookOfHouseholdAccounnts"
+        mc:Ignorable="d"
+        Title="Book of Household Accounnts" Height="510" Width="600"
+        Closing="MainWindow_Closing">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Name="menu_open" Header="_Open" Click="menu_open_Click">
+                    <MenuItem.Icon>
+                        <Image Source="{Binding OpenIconPath}"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="menu_save" Header="_Save" Click="menu_save_Click">
+                    <MenuItem.Icon>
+                        <Image Source="{Binding SaveIconPath}"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="_Exit">
+                    <MenuItem.Icon>
+                        <Image Source="{Binding ExitIconPath}"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>            
+        </Menu>
+        <TabControl>
+            <TabItem Name="tabItem_bankAccounts" Header="General" Width="100">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="14*"></RowDefinition>
+                        <RowDefinition Height="80*"></RowDefinition>
+                        <RowDefinition Height="6*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <GroupBox Grid.Row="0" Grid.Column="0" Header="General">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20*"></ColumnDefinition>
+                                <ColumnDefinition Width="20*"></ColumnDefinition>
+                                <ColumnDefinition Width="20*"></ColumnDefinition>
+                                <ColumnDefinition Width="20*"></ColumnDefinition>
+                                <ColumnDefinition Width="20*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Name="btn_addBankInstitute" Height="25" Width="103" Margin="0,5,0,0" Click="btn_addBankInstitute_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding AddIconPath}"></Image>
+                                    <TextBlock Text="Bank Account  " VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Row="1" Grid.Column="0" Header="Transactions">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="94*"></ColumnDefinition>
+                                <ColumnDefinition Width="6*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <DataGrid Grid.Column="0" Name="dg_transactions" ItemsSource="{Binding Transactions}" AutoGenerateColumns="False" LoadingRow="dg_transactions_LoadingRow"
+                                      IsReadOnly="True" Margin="0,5,0,0">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Value" Width="12*" Binding="{Binding TransactionValue}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Date" Width="16*" Binding="{Binding Date}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Transaction Partner" Width="25*" Binding="{Binding TransactionPartner}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Bank Institute" Width="25*" Binding="{Binding BankInstitute}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Category" Width="24*" Binding="{Binding Category}"></DataGridTextColumn>
+                                    <DataGridTemplateColumn Header="" Width="9*" IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button  Click="ShowTransactionDetails" Width="35" Height="15">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock FontSize="7" Text="Details" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button Grid.Column="1" Name="btn_filterTransaction" Click="btn_filterTransaction_Click" VerticalAlignment="Top" Height="25" Width="25" Margin="1,30,0,0">
+                                <StackPanel>
+                                    <Image Source="{Binding FilterIconPath}"></Image>
+                                </StackPanel>
+                            </Button>
+                            <Button Grid.Column="1" Name="btn_addTransaction" VerticalAlignment="Top" Height="25" Width="25" Margin="1,70,0,0" Click="btn_addTransaction_Click">
+                                <StackPanel>
+                                    <Image Source="{Binding AddIconPath}"></Image>
+                                </StackPanel>
+                            </Button>
+                            <Button Grid.Column="1" Name="btn_deleteTransaction" VerticalAlignment="Top" Height="25" Width="25" Margin="1,100,0,0" Click="btn_deleteTransaction_Click">
+                                <StackPanel>
+                                    <Image Source="{Binding DeleteIconPath}"></Image>
+                                </StackPanel>
+                            </Button>
+                            <Button Grid.Column="1" VerticalAlignment="Top" Height="25" Width="25" Margin="1,130,0,0">
+                                <StackPanel>
+                                    <Image Source="{Binding EditIconPath}"></Image>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </GroupBox>
+                    <Separator Grid.Row="2" Grid.Column="0" VerticalAlignment="Top"/>
+                    <Label Grid.Row="2" FontSize="10" VerticalAlignment="Bottom">Total Balance: </Label>
+                    <Label Grid.Row="2" FontSize="10" Content="{Binding TotalBalance}" ContentStringFormat=" {0}€" Foreground="{Binding TotalBalanceColor}" VerticalAlignment="Bottom" Margin="60,0,0,0"></Label>
+                </Grid>
+            </TabItem>
+            <TabItem Name="tabItem_contracts" Header="Contracts" Width="100"></TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>
