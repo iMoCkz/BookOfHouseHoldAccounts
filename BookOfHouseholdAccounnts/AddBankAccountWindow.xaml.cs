@@ -14,7 +14,7 @@ namespace BookOfHouseholdAccounnts
     public partial class AddBankAccountWindow : Window
     {
         public string BankAccountName { get; private set; }
-        public decimal BankAccountBalance { get; private set; }
+        public float BankAccountBalance { get; private set; }
         public DateTime BankAccountBalanceDate { get; private set; }
         public string BankAccountDescription { get; private set; }
         
@@ -29,7 +29,7 @@ namespace BookOfHouseholdAccounnts
             if (txtBox_name.Text.Replace(" ", "") != "" && txtBox_balance.Text.Replace(" ", "") != "")
             {
                 BankAccountName = txtBox_name.Text;
-                BankAccountBalance = Convert.ToDecimal(txtBox_balance.Text);
+                BankAccountBalance = Convert.ToSingle(txtBox_balance.Text);
                 BankAccountBalanceDate = (DateTime)datepicker_balanceDate.SelectedDate;
                 BankAccountDescription = txtBox_description.Text;
                 DialogResult = true; 

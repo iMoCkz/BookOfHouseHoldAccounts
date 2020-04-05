@@ -11,7 +11,7 @@ namespace BookOfHouseholdAccounnts
     {
         public string Name { get; set; }
 
-        public decimal Balance { get; set; }
+        public float Balance { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -28,7 +28,7 @@ namespace BookOfHouseholdAccounnts
             Incomes = new List<Income>(); 
         }
 
-        public BankAccount(string bankInstitute, decimal balance, DateTime balanceDate, string description)
+        public BankAccount(string bankInstitute, float balance, DateTime balanceDate, string description)
         {
             Name = bankInstitute;
             Balance = balance;
@@ -45,11 +45,11 @@ namespace BookOfHouseholdAccounnts
             {
                 if (expense.IsExpense)
                 {
-                    Balance -= expense.TotalValue;
+                    Balance -= expense.Value;
                 }
                 else
                 {
-                    Balance += expense.TotalValue;
+                    Balance += expense.Value;
                 }
             }
         }
@@ -60,11 +60,11 @@ namespace BookOfHouseholdAccounnts
             {
                 if (income.IsExpense)
                 {
-                    Balance -= income.TotalValue;
+                    Balance -= income.Value;
                 }
                 else
                 {
-                    Balance += income.TotalValue;
+                    Balance += income.Value;
                 }
             }
         }

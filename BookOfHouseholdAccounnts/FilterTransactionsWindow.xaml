@@ -3,34 +3,49 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BookOfHouseholdAccounnts"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:BookOfHouseholdAccounnts" xmlns:avalon1="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="FilterTransactionsWindow" Height="300" Width="800">
+        Title="FilterTransactionsWindow" Height="200" Width="600">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"></RowDefinition>
-            <RowDefinition Height="10*"></RowDefinition>
-            <RowDefinition Height="70*"></RowDefinition>
-            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="14*"></ColumnDefinition>
-            <ColumnDefinition Width="14*"></ColumnDefinition>
-            <ColumnDefinition Width="14*"></ColumnDefinition>
-            <ColumnDefinition Width="14*"></ColumnDefinition>
-            <ColumnDefinition Width="14*"></ColumnDefinition>
-            <ColumnDefinition Width="14*"></ColumnDefinition>
-            <ColumnDefinition Width="14*"></ColumnDefinition>
+            <ColumnDefinition Width="22*"></ColumnDefinition>
+            <ColumnDefinition Width="16*"></ColumnDefinition>
+            <ColumnDefinition Width="22*"></ColumnDefinition>
+            <ColumnDefinition Width="28*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0">Bank Institute</Label>
-        <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding BankInstituteFilterContent}" IsChecked="{Binding BankInstituteFilterChecked}" VerticalAlignment="Center" Margin="5,0,5,0"></CheckBox>
-        <ListBox Grid.Row="2" Grid.Column="0" Name="listbox_filteredBanks" ItemsSource="{Binding BankInstituteOptions}" Margin="5,0,5,5">
+        <CheckBox Grid.Row="0" Grid.Column="0" Name="chckbx_bankInstitute" VerticalAlignment="Center">Bank Institute</CheckBox>
+        <ListBox Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Name="listbox_filteredBanks" IsEnabled="{Binding ElementName=chckbx_bankInstitute, Path=IsChecked}" ItemsSource="{Binding BankInstituteOptions}" Margin="5,0,5,5">
             <ListBox.ItemTemplate>
-                <HierarchicalDataTemplate>
-                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}"/>
-                </HierarchicalDataTemplate>
+                <DataTemplate>
+                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsFiltered}"/>
+                </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="3" Grid.Column="7" Name="btn_apply" Width="75" Height="25" HorizontalAlignment="Right" Margin="0,0,5,0" Click="Btn_apply_Click">Apply</Button>
+        <CheckBox Grid.Row="0" Grid.Column="1" Name="chckbx_valueRange" VerticalAlignment="Center">Value</CheckBox>
+        <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left">From</Label>
+        <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Name="iud_min" IsEnabled="{Binding ElementName=chckbx_valueRange, Path=IsChecked}" Value="-100" Minimum="-10000" Maximum="10000" Margin="35,0,5,0" LostFocus="iud_min_LostFocus"/>
+        <Label Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left">To</Label>
+        <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Name="iud_max" IsEnabled="{Binding ElementName=chckbx_valueRange, Path=IsChecked}" Value="100" Minimum="-10000" Maximum="10000" Margin="35,0,5,0" LostFocus="iud_max_LostFocus"></xctk:IntegerUpDown>
+        <CheckBox Grid.Row="0" Grid.Column="2" Name="chckbx_dateRange" VerticalAlignment="Center">Date</CheckBox>
+        <Label Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left">From</Label>
+        <DatePicker Grid.Row="1" Grid.Column="2" Name="datepicker_start" IsEnabled="{Binding ElementName=chckbx_dateRange, Path=IsChecked}" VerticalAlignment="Center" Margin="35,0,5,0"></DatePicker>
+        <Label Grid.Row="2" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left">To</Label>
+        <DatePicker Grid.Row="2" Grid.Column="2" Name="datepicker_end" IsEnabled="{Binding ElementName=chckbx_dateRange, Path=IsChecked}" SelectedDate="{Binding CurrentDateTime}" VerticalAlignment="Center" Margin="35,0,5,0"></DatePicker>
+        <CheckBox Grid.Row="0" Grid.Column="3" Name="chckbx_keyword" VerticalAlignment="Center">Keyword</CheckBox>
+        <ListBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" Name="listbox_keywords" IsEnabled="{Binding ElementName=chckbx_keyword, Path=IsChecked}" Margin="5,0,5,5">
+            <CheckBox Name="chckbx_partner">Transaction Partner</CheckBox>
+            <CheckBox Name="chckbx_description">Description</CheckBox>
+            <Label></Label>
+            <TextBox Name="txtbx_keyword" Width="160" GotFocus="txtbx_keyword_GotFocus" LostFocus="txtbx_keyword_LostFocus">Enter your keyword</TextBox>
+        </ListBox>
+        <Button Grid.Row="4" Grid.Column="3" Name="btn_apply" Width="50" Height="25" HorizontalAlignment="Right" Margin="0,0,5,0" Click="btn_apply_Click">Apply</Button>
     </Grid>
 </Window>

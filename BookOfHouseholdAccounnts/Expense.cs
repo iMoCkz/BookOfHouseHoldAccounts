@@ -8,7 +8,7 @@ namespace BookOfHouseholdAccounnts
 {
     public class Expense : Transaction
     {
-        public decimal RefundableValue { get; set; }
+        public float RefundableValue { get; set; }
         public bool IsRefunded { get; set; }
         public string BudgetingCategory { get; set; }
     }

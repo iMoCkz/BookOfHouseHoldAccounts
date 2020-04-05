@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiveCharts;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -68,6 +69,17 @@ namespace BookOfHouseholdAccounnts
             }
         }
 
+        public string importIconPath = Path.GetFullPath("pics/import.png");
+        public string ImportIconPath
+        {
+            get { return importIconPath; }
+            set
+            {
+                importIconPath = value;
+                NotifyPropertyChanged("ImportIconPath");
+            }
+        }
+
         public string exitIconPath = Path.GetFullPath("pics/exit.png");
         public string ExitIconPath
         {
@@ -89,24 +101,13 @@ namespace BookOfHouseholdAccounnts
                 NotifyPropertyChanged("OpenIconPath");
             }
         }
-
-        public Uri infoIconPath = new Uri(Path.GetFullPath("info/open.png"));
-        public Uri InfoIconPath
-        {
-            get { return infoIconPath; }
-            set
-            {
-                infoIconPath = value;
-                NotifyPropertyChanged("InfoIconPath");
-            }
-        }
         #endregion
 
         public ObservableCollection<TransactionOverview> Transactions { get; set; } =
             new ObservableCollection<TransactionOverview>();
 
-        public ObservableCollection<string> BankInstituteOptions { get; set; } =
-            new ObservableCollection<string>();
+        public ObservableCollection<BankInstituteView> BankInstituteOptions { get; set; } =
+            new ObservableCollection<BankInstituteView>();
 
         public ObservableCollection<string> BudgetingOptions { get; set; } =
          new ObservableCollection<string>();
@@ -139,17 +140,6 @@ namespace BookOfHouseholdAccounnts
             }
         }
 
-        private string bankInstituteFilterChecked;
-        public string BankInstituteFilterChecked
-        {
-            get { return bankInstituteFilterChecked; }
-            set
-            {
-                bankInstituteFilterChecked = value;
-                NotifyPropertyChanged("BankInstituteFilterChecked");
-            }
-        }
-
         private bool periodicityEnabled = false;
         public bool PeriodicityEnabled
         {
@@ -161,8 +151,8 @@ namespace BookOfHouseholdAccounnts
             }
         }
 
-        private decimal totalBalance = 0.0m;
-        public decimal TotalBalance
+        private float totalBalance = 0;
+        public float TotalBalance
         {
             get { return totalBalance; }
             set
@@ -198,6 +188,28 @@ namespace BookOfHouseholdAccounnts
             }
         }
 
+        private SolidColorBrush filterAppliedColor = Brushes.Red;
+        public SolidColorBrush FilterAppliedColor
+        {
+            get { return filterAppliedColor; }
+            set
+            {
+                filterAppliedColor = value;
+                NotifyPropertyChanged("FilterAppliedColor");
+            }
+        }
+
+        private string filterAppliedToolTip = "No filter applied. Press to apply selected filter(s).";
+        public string FilterAppliedToolTip
+        {
+            get { return filterAppliedToolTip; }
+            set
+            {
+                filterAppliedToolTip = value;
+                NotifyPropertyChanged("FilterAppliedToolTip");
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
         {
@@ -210,7 +222,7 @@ namespace BookOfHouseholdAccounnts
         public TransactionOverview(Transaction transaction)
         {
             BankInstitute = transaction.BankInstitute;
-            TransactionValue = transaction.TotalValue;
+            TransactionValue = transaction.Value;
             TransactionPartner = transaction.Partner;
             Category = transaction.TransactionCategory;
             Date = transaction.Date.ToString("dd/MM/yyyy");
@@ -234,8 +246,8 @@ namespace BookOfHouseholdAccounnts
             }
         }
         //
-        private decimal transactionValue = 0;
-        public decimal TransactionValue
+        private float transactionValue = 0;
+        public float TransactionValue
         {
             get { return transactionValue; }
             set
@@ -278,5 +290,17 @@ namespace BookOfHouseholdAccounnts
             }
         }
         public string ID { get; private set; }
+    }
+
+    public class BankInstituteView
+    {
+        public BankInstituteView(string name)
+        {
+            Name = name;
+            IsFiltered = false;
+        }
+        public string Name { get; set; }
+        
+        public bool IsFiltered { get; set; }
     }
 }

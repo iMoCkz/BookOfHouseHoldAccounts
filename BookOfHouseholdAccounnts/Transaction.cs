@@ -8,11 +8,12 @@ namespace BookOfHouseholdAccounnts
 {
     public class Transaction
     {
-        public decimal TotalValue { get; set; }        
+        public float Value { get; set; }        
         public string Partner { get; set; }
         public string BankInstitute { get; set; }
         public string TransactionCategory { get; set; }
         public DateTime Date { get; set; }
+        public bool HasPeriodicity { get; set; }
         public int PeriodicityDuration { get; set; }
         public string PeriodicityUnit { get; set; }
         public string Details { get; set; }
