@@ -34,7 +34,7 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        <TabControl>
+        <TabControl Name="tbCntrl_mainWindow" SelectionChanged="tbCntrl_mainWindow_SelectionChanged">
             <TabItem Name="tabItem_bankAccounts" Header="General" Width="100">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -86,7 +86,7 @@
                                     <Image Source="{Binding AddIconPath}"></Image>
                                 </StackPanel>
                             </Button>
-                            <Button Grid.Column="1" Name="btn_deleteTransaction" VerticalAlignment="Top" Height="25" Margin="5,96,4,0" Click="btn_deleteTransaction_Click">
+                            <Button Grid.Column="1" Name="btn_deleteTransaction" VerticalAlignment="Top" Height="25" Width="25" Margin="5,96,4,0" Click="btn_deleteTransaction_Click">
                                 <StackPanel>
                                     <Image Source="{Binding DeleteIconPath}"></Image>
                                 </StackPanel>
@@ -114,7 +114,14 @@
                         <ColumnDefinition Width="50*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <lvc:PieChart Grid.Row="0" Grid.Column="0" Name="pieChart_budgetingSeries" LegendLocation="Right" DataTooltip="{x:Null}" HoverPushOut="7"></lvc:PieChart>
-                    <lvc:CartesianChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="chartesianChart_transactionSeries" LegendLocation="Right"></lvc:CartesianChart>
+                    <lvc:CartesianChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="chartesianChart_transactionSeries" LegendLocation="Bottom" DataTooltip="{x:Null}" Margin="5,0,5,5">
+                        <lvc:CartesianChart.ChartLegend>
+                            <lvc:DefaultLegend BulletSize="5" Margin="0,5,0,0" FontSize="10"></lvc:DefaultLegend>
+                        </lvc:CartesianChart.ChartLegend>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis ShowLabels="False"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
                 </Grid>
             </TabItem>
             <TabItem Name="tabItem_contracts" Header="Contracts" Width="100"></TabItem>

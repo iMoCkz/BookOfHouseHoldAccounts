@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Xml;
 using System.Xml.Serialization;
 using LiveCharts;
+using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 
 namespace BookOfHouseholdAccounnts
@@ -24,6 +25,8 @@ namespace BookOfHouseholdAccounnts
         private List<BankAccount> bankAccounts;
         private bool isSavedData = true;
         private TransactionFilter transFilter, prevTransFilter;
+        private ObservableValue value1;
+
         public MainWindow()
         {
             //CultureInfo culture = new CultureInfo(ConfigurationManager.AppSettings["DefaultCulture"]);
@@ -65,9 +68,10 @@ namespace BookOfHouseholdAccounnts
 
             foreach (string series in vwModel.TransactionOptions)
             {
-                chartesianChart_transactionSeries.Series.Add(new ColumnSeries { Title = series, Values = new ChartValues<double> { 10, 50, 39, 50, 50, 39, 50, 50, 39, 50, 50, 39, 50, 50, 39 } });
+                chartesianChart_transactionSeries.Series.Add(new ColumnSeries { Title = series, Values = new ChartValues<double> { 10 }, DataLabels=true, MaxColumnWidth=55 });
             }
-
+            //chartesianChart_transactionSeries.Series[0].Values = new ChartValues<double> { 35 };
+            chartesianChart_transactionSeries.Series[0].Values[0] = 15.0;
         }
 
 
@@ -147,7 +151,7 @@ namespace BookOfHouseholdAccounnts
                 vwModel.BankInstituteOptions.Add(new BankInstituteView(newBankAccountWindow.BankAccountName));
                 vwModel.TotalBalance += newBankAccountWindow.BankAccountBalance;
                 isSavedData = false;
-            }
+            }            
         }
 
         private void btn_addTransaction_Click(object sender, RoutedEventArgs e)
@@ -417,6 +421,18 @@ namespace BookOfHouseholdAccounnts
             }
 
             return null; 
+        }
+
+        private void tbCntrl_mainWindow_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tabItem_evaluation.IsSelected)
+            {
+                this.Width = 900;
+            }
+            else
+            {
+                this.Width = 600;
+            }
         }
 
         private void lbl_filterUnderscore_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)

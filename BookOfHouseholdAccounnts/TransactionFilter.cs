@@ -19,6 +19,5 @@ namespace BookOfHouseholdAccounnts
         public bool IsPartnerKeyword { get; set; }
         public bool IsDescriptionKeyword { get; set; }
         public string Keyword { get; set; }
-
     }
 }
