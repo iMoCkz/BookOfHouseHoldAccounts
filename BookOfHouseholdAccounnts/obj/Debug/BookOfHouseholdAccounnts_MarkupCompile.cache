@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-D:\BookOfHouseholdAccounnts\BookOfHouseholdAccounnts\obj\Debug\
+C:\Users\Maxe\source\repos\BookOfHouseHoldAccounts\BookOfHouseholdAccounnts\obj\Debug\
 BookOfHouseholdAccounnts
 none
 false
 DEBUG;TRACE
-D:\BookOfHouseholdAccounnts\BookOfHouseholdAccounnts\App.xaml
+C:\Users\Maxe\source\repos\BookOfHouseHoldAccounts\BookOfHouseholdAccounnts\App.xaml
 51647633944
 
 15-201068181
-31-1712549021
+31-249499586
 AddBankAccountWindow.xaml;AddAndEditTransactionWindow.xaml;FilterTransactionsWindow.xaml;ImportWindow.xaml;MainWindow.xaml;
 
 False

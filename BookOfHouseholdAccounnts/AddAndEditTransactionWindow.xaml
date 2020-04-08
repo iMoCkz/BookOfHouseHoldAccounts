@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookOfHouseholdAccounnts"
         mc:Ignorable="d"
-        Title="AddTransactionWindow" Height="420" Width="350">
+        Title="AddTransactionWindow" Height="425" Width="350">
     <TabControl  Name="tabCtrl_transaction">
         <TabItem Name="tbItm_expense" Header="Expense" Width="60">
             <Grid>
@@ -21,7 +21,7 @@
                     <RowDefinition Height="8*"></RowDefinition>
                     <RowDefinition Height="7*"></RowDefinition>
                     <RowDefinition Height="25*"></RowDefinition>
-                    <RowDefinition Height="8*"></RowDefinition>
+                    <RowDefinition Height="9*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="36*"></ColumnDefinition>
@@ -51,8 +51,10 @@
                   HorizontalAlignment="Right" Width="85" Height="20" Margin="0,0,10,0"></ComboBox>
                 <TextBox Grid.Row="9" Grid.Column="1" Name="txtBox_descriptionExpense" TextWrapping="Wrap" AcceptsReturn="True" 
                  VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Margin="0,5,10,0" Height="83"></TextBox>
-                <Button Grid.Row="10" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Width="50" Height="25" Margin="0,0,-35,0">Cancel</Button>
-                <Button Grid.Row="10" Grid.Column="1" Name="btn_addExpense" VerticalAlignment="Top" HorizontalAlignment="Right" Width="50" Height="25" Margin="0,0,10,0" Click="btn_add_Click">Add</Button>
+                <Label Grid.Row="10" Grid.Column="0" VerticalAlignment="Top" FontSize="10">Additional Information:</Label>
+                <Label Grid.Row="10" Grid.Column="0" Content="{Binding AdditionalTransactionInformation}" VerticalAlignment="Bottom" FontSize="10" FontStyle="Italic" Margin="2,0,0,0"></Label>
+                <Button Grid.Row="10" Grid.Column="1" HorizontalAlignment="Center" Width="50" Height="25" Margin="0,0,-35,0">Cancel</Button>
+                <Button Grid.Row="10" Grid.Column="1" Name="btn_addExpense" HorizontalAlignment="Right" Width="50" Height="25" Margin="0,0,10,0" Click="btn_add_Click">Add</Button>
             </Grid>
         </TabItem>
         <TabItem Name="tbItm_income" Header="Income" Width="60">

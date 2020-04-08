@@ -37,7 +37,6 @@ namespace BookOfHouseholdAccounnts
             this.DataContext = vwModel;
             InitializeComponent();
             InitCategories();
-            InitDiagrams();
             OpenBankAccountData();
         }
         #endregion
@@ -57,21 +56,45 @@ namespace BookOfHouseholdAccounnts
 
         private void InitDiagrams()
         {
+            ((DefaultTooltip)chartesianChart_transactionSeries.DataTooltip).SelectionMode = TooltipSelectionMode.OnlySender;
+
             var i = 0;
             var pieChartColors = new SolidColorBrush[] { Brushes.LimeGreen, Brushes.CornflowerBlue, Brushes.IndianRed };
             Func<ChartPoint, string> PointLabel = chartPoint => string.Format("{0}€ ({1:P})", chartPoint.Y, chartPoint.Participation);
 
+            pieChart_budgetingSeries.Series.Clear(); 
             foreach (string series in vwModel.BudgetingOptions)
             {
-                pieChart_budgetingSeries.Series.Add(new PieSeries { Title = series, Fill = pieChartColors[i++], StrokeThickness = 0, Values = new ChartValues<double> { 10.0 * i }, DataLabels = true, LabelPoint = PointLabel });
+                double seriesValue = 0; 
+                foreach (BankAccount bkkAcc in bankAccounts)
+                {
+                    seriesValue += bkkAcc.Expenses.Where(expense => expense.BudgetingCategory == series).Sum(expense => expense.Value);
+                }
+
+                pieChart_budgetingSeries.Series.Add(new PieSeries { 
+                    Title = series, 
+                    Fill = pieChartColors[i++], 
+                    StrokeThickness = 0, 
+                    Values = new ChartValues<double> { seriesValue },
+                    DataLabels = true, 
+                    LabelPoint = PointLabel 
+                });
             }
 
+            chartesianChart_transactionSeries.Series.Clear();
             foreach (string series in vwModel.TransactionOptions)
             {
-                chartesianChart_transactionSeries.Series.Add(new ColumnSeries { Title = series, Values = new ChartValues<double> { 10 }, DataLabels=true, MaxColumnWidth=55 });
+                double seriesValue = 0;
+                foreach (BankAccount bkkAcc in bankAccounts)
+                {
+                    seriesValue += bkkAcc.Expenses.Where(expense => expense.TransactionCategory == series).Sum(expense => expense.Value);
+                    seriesValue += bkkAcc.Incomes.Where(incomes => incomes.TransactionCategory == series).Sum(incomes => incomes.Value);
+                }
+
+                chartesianChart_transactionSeries.Series.Add(new ColumnSeries { Title = series, Values = new ChartValues<double> { seriesValue }, DataLabels=true, MaxColumnWidth=55 });
             }
             //chartesianChart_transactionSeries.Series[0].Values = new ChartValues<double> { 35 };
-            chartesianChart_transactionSeries.Series[0].Values[0] = 15.0;
+            //chartesianChart_transactionSeries.Series[0].Values[0] = 15.0;
         }
 
 
@@ -98,12 +121,11 @@ namespace BookOfHouseholdAccounnts
                     foreach (BankAccount bankAcc in bankAccs)
                     {
                         vwModel.BankInstituteOptions.Add(new BankInstituteView(bankAcc.Name));
-                        vwModel.TotalBalance += bankAcc.Balance;
-                        //vwModel.TotalBalanceColor = Colors.Green;
                     }
                 }
                 // Add Transaction to ViewModel
                 AddAllTransactionsToView();
+                vwModel.TotalBalance = vwModel.Transactions.Sum(trans => trans.TransactionValue);
                 isSavedData = true;
             }
             catch
@@ -129,6 +151,37 @@ namespace BookOfHouseholdAccounnts
                     vwModel.Transactions.Add(new TransactionOverview(income));
                 }
             }
+        }
+
+        private string[] ReadAndSeparateString(string bank, string str)
+        {
+            switch (bank)
+            {
+                case "Sparkasse":
+                    return str.Replace("\"", "").Split(';');
+                case "HypoVereinsbank":
+                    return str.Replace("\0", "").Split(';');
+                default:
+                    return null;
+            }
+        }
+        private Transaction AddTransactionFromImport(Transaction transaction)
+        {
+            var newAddTransactionWindow = new AddAndEditTransactionWindow(vwModel, transaction, false, true);
+
+            if (newAddTransactionWindow.ShowDialog() ?? false)
+            {
+                if (newAddTransactionWindow.TransExpense != null)
+                {
+                    return newAddTransactionWindow.TransExpense;
+                }
+                else if (newAddTransactionWindow.TransIncome != null)
+                {
+                    return newAddTransactionWindow.TransIncome;
+                }
+            }
+
+            return null;
         }
         #endregion
 
@@ -173,6 +226,7 @@ namespace BookOfHouseholdAccounnts
                         bankAccounts.Find(account => account.Name == income.BankInstitute).AddIncome(income);
                         vwModel.Transactions.Add(new TransactionOverview(income));
                     }
+                    vwModel.TotalBalance = vwModel.Transactions.Sum(trans => trans.TransactionValue);
                     isSavedData = false;
                 }
             }
@@ -212,8 +266,8 @@ namespace BookOfHouseholdAccounnts
                     }
                 }
             }
-
             vwModel.Transactions.Remove(currentTransaction);
+            vwModel.TotalBalance = vwModel.Transactions.Sum(trans => trans.TransactionValue);
         }
 
         private void btn_filterTransaction_Click(object sender, RoutedEventArgs e)
@@ -256,6 +310,7 @@ namespace BookOfHouseholdAccounnts
                     }
                 }
             }
+            vwModel.TotalBalance = vwModel.Transactions.Sum(trans => trans.TransactionValue);
         }
 
         private void menu_save_Click(object sender, RoutedEventArgs e)
@@ -287,8 +342,6 @@ namespace BookOfHouseholdAccounnts
                 }
             }
         }
-
-        #endregion
 
         private void dg_transactions_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -331,6 +384,8 @@ namespace BookOfHouseholdAccounnts
             {
                 using (var sr = new StreamReader(newImportWindow.FilePath))
                 {
+                    var transImportCt = File.ReadAllLines(newImportWindow.FilePath).Length - 2;
+
                     var columnNamnes = ReadAndSeparateString(newImportWindow.BankInstitute, sr.ReadLine()).ToList();
 
                     var valueIdx = columnNamnes.FindIndex(col => col.Contains("Betrag"));
@@ -340,6 +395,8 @@ namespace BookOfHouseholdAccounnts
 
                     if (valueIdx + partnerIdx + dateIdx + detailIdx >= 6)
                     {
+                        int transCt = 1; 
+
                         string currentLine;
                         while ((currentLine = sr.ReadLine()) != null)
                         {
@@ -366,7 +423,9 @@ namespace BookOfHouseholdAccounnts
                                 transaction.Details = currentTransValues[detailIdx];
                                 transaction.BankInstitute = newImportWindow.BankInstitute;
 
+                                vwModel.AdditionalTransactionInformation = String.Format("Transaction {0} / {1}", transCt++, transImportCt);
                                 transaction = AddTransactionFromImport(transaction);
+                                vwModel.AdditionalTransactionInformation = "-";
 
                                 var bkkAcc = bankAccounts.Find(account => account.Name == transaction.BankInstitute);
 
@@ -391,43 +450,13 @@ namespace BookOfHouseholdAccounnts
             }
         }
 
-        private string[] ReadAndSeparateString(string bank, string str)
-        {
-            switch (bank)
-            {
-                case "Sparkasse":
-                    return str.Replace("\"", "").Split(';');
-                case "HypoVereinsbank":
-                    return str.Replace("\0", "").Split(';');
-                default:
-                    return null;
-            }
-        }
-
-        private Transaction AddTransactionFromImport(Transaction transaction)
-        {
-            var newAddTransactionWindow = new AddAndEditTransactionWindow(vwModel, transaction, false, true);
-
-            if (newAddTransactionWindow.ShowDialog() ?? false)
-            {
-                if (newAddTransactionWindow.TransExpense != null)
-                {
-                    return newAddTransactionWindow.TransExpense;
-                }
-                else if (newAddTransactionWindow.TransIncome != null)
-                {
-                    return newAddTransactionWindow.TransIncome;
-                }
-            }
-
-            return null; 
-        }
 
         private void tbCntrl_mainWindow_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (tabItem_evaluation.IsSelected)
             {
                 this.Width = 900;
+                InitDiagrams();
             }
             else
             {
@@ -455,5 +484,6 @@ namespace BookOfHouseholdAccounnts
                 AddAllTransactionsToView();
             }
         }
+        #endregion
     }
 }

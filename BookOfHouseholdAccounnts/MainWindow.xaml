@@ -100,7 +100,9 @@
                     </GroupBox>
                     <Separator Grid.Row="2" Grid.Column="0" VerticalAlignment="Top"/>
                     <Label Grid.Row="2" FontSize="10" VerticalAlignment="Bottom">Total Balance:</Label>
-                    <Label Grid.Row="2" FontSize="10" Content="{Binding TotalBalance}" ContentStringFormat=" {0}€" Foreground="{Binding TotalBalanceColor}" VerticalAlignment="Bottom" Margin="60,0,0,0"></Label>
+                    <Label Grid.Row="2" FontSize="10" Content="{Binding TotalBalance}" ContentStringFormat=" {0}€" Foreground="{Binding TotalBalanceColor}" VerticalAlignment="Bottom" Margin="60,0,0,-1"></Label>
+                    <Label Grid.Row="2" FontSize="10" VerticalAlignment="Bottom" Margin="110,0,0,0">Transaction Amount:</Label>
+                    <Label Grid.Row="2" FontSize="10" Content="{Binding Transactions.Count}" VerticalAlignment="Bottom" Margin="205,0,0,-1"></Label>
                 </Grid>
             </TabItem>
             <TabItem Name="tabItem_evaluation" Header="Evaluation" Width="100">
@@ -114,7 +116,10 @@
                         <ColumnDefinition Width="50*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <lvc:PieChart Grid.Row="0" Grid.Column="0" Name="pieChart_budgetingSeries" LegendLocation="Right" DataTooltip="{x:Null}" HoverPushOut="7"></lvc:PieChart>
-                    <lvc:CartesianChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="chartesianChart_transactionSeries" LegendLocation="Bottom" DataTooltip="{x:Null}" Margin="5,0,5,5">
+                    <lvc:CartesianChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="chartesianChart_transactionSeries" LegendLocation="Bottom" Margin="5,0,5,5">
+                        <lvc:CartesianChart.DataTooltip>
+                            <lvc:DefaultTooltip BulletSize="20" Background="Gray" IsWrapped ="true"/>
+                        </lvc:CartesianChart.DataTooltip>
                         <lvc:CartesianChart.ChartLegend>
                             <lvc:DefaultLegend BulletSize="5" Margin="0,5,0,0" FontSize="10"></lvc:DefaultLegend>
                         </lvc:CartesianChart.ChartLegend>

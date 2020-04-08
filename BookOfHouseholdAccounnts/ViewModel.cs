@@ -217,6 +217,17 @@ namespace BookOfHouseholdAccounnts
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+
+        private string additionalTransactionInformation = "-";
+        public string AdditionalTransactionInformation
+        {
+            get { return additionalTransactionInformation; }
+            set
+            {
+                additionalTransactionInformation = value;
+                NotifyPropertyChanged("AdditionalTransactionInformation");
+            }
+        }
     }
 
     public class TransactionOverview : INotifyPropertyChanged
@@ -291,6 +302,7 @@ namespace BookOfHouseholdAccounnts
                 NotifyPropertyChanged("Date");
             }
         }
+
         public string ID { get; private set; }
     }
 
