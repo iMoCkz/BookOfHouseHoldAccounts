@@ -62,17 +62,20 @@ namespace BookOfHouseholdAccounnts
                 {
                     btn_addExpense.Content = "Add";
                     btn_addIncome.Content = "Add";
+                    this.Title = "Add Transaction";
                 }
                 else
                 {
                     btn_addExpense.Content = "Edit";
                     btn_addIncome.Content = "Edit";
-                }               
+                    this.Title = "Edit Transaction";
+                }
             }
             else
             {                
                 btn_addIncome.Content = "Add";
                 btn_addExpense.Content = "Add";
+                this.Title = "Add Transaction";
 
                 if (vwModel.BankInstituteOptions.Count > 0) combobox_bankInstituteExpense.SelectedIndex = 0;
                 if (vwModel.BankInstituteOptions.Count > 0) combobox_bankInstituteIncome.SelectedIndex = 0;

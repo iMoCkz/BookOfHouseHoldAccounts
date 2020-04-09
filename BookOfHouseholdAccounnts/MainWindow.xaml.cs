@@ -427,18 +427,21 @@ namespace BookOfHouseholdAccounnts
                                 transaction = AddTransactionFromImport(transaction);
                                 vwModel.AdditionalTransactionInformation = "-";
 
-                                var bkkAcc = bankAccounts.Find(account => account.Name == transaction.BankInstitute);
-
-                                if (transaction.Value < 0)
+                                if (transaction != null)
                                 {
-                                    bkkAcc.Expenses.Add(transaction as Expense);
-                                }
-                                else
-                                {
-                                    bkkAcc.Incomes.Add(transaction as Income);
-                                }
+                                    var bkkAcc = bankAccounts.Find(account => account.Name == transaction.BankInstitute);
 
-                                vwModel.Transactions.Add(new TransactionOverview(transaction));
+                                    if (transaction.Value < 0)
+                                    {
+                                        bkkAcc.Expenses.Add(transaction as Expense);
+                                    }
+                                    else
+                                    {
+                                        bkkAcc.Incomes.Add(transaction as Income);
+                                    }
+
+                                    vwModel.Transactions.Add(new TransactionOverview(transaction));
+                                }                                
                             }
                         }
                     }
@@ -462,6 +465,11 @@ namespace BookOfHouseholdAccounnts
             {
                 this.Width = 600;
             }
+        }
+
+        private void btn_addContract_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void lbl_filterUnderscore_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)

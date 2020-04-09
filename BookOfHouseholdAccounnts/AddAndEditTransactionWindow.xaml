@@ -52,7 +52,7 @@
                 <TextBox Grid.Row="9" Grid.Column="1" Name="txtBox_descriptionExpense" TextWrapping="Wrap" AcceptsReturn="True" 
                  VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Margin="0,5,10,0" Height="83"></TextBox>
                 <Label Grid.Row="10" Grid.Column="0" VerticalAlignment="Top" FontSize="10">Additional Information:</Label>
-                <Label Grid.Row="10" Grid.Column="0" Content="{Binding AdditionalTransactionInformation}" VerticalAlignment="Bottom" FontSize="10" FontStyle="Italic" Margin="2,0,0,0"></Label>
+                <Label Grid.Row="10" Grid.Column="0" Content="{Binding AdditionalTransactionInformation}" VerticalAlignment="Bottom" FontSize="10" FontStyle="Oblique" Margin="2,0,0,0"></Label>
                 <Button Grid.Row="10" Grid.Column="1" HorizontalAlignment="Center" Width="50" Height="25" Margin="0,0,-35,0">Cancel</Button>
                 <Button Grid.Row="10" Grid.Column="1" Name="btn_addExpense" HorizontalAlignment="Right" Width="50" Height="25" Margin="0,0,10,0" Click="btn_add_Click">Add</Button>
             </Grid>

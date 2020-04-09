@@ -118,3 +118,5 @@ C:\Users\Maxe\source\repos\BookOfHouseHoldAccounts\BookOfHouseholdAccounnts\obj\
 C:\Users\Maxe\source\repos\BookOfHouseHoldAccounts\BookOfHouseholdAccounnts\obj\Debug\BookOfHouseholdAccounts.csproj.CopyComplete
 C:\Users\Maxe\source\repos\BookOfHouseHoldAccounts\BookOfHouseholdAccounnts\obj\Debug\BookOfHouseholdAccounnts.exe
 C:\Users\Maxe\source\repos\BookOfHouseHoldAccounts\BookOfHouseholdAccounnts\obj\Debug\BookOfHouseholdAccounnts.pdb
+C:\Users\Maxe\source\repos\BookOfHouseHoldAccounts\BookOfHouseholdAccounnts\obj\Debug\AddContractWindow.g.cs
+C:\Users\Maxe\source\repos\BookOfHouseHoldAccounts\BookOfHouseholdAccounnts\obj\Debug\AddContractWindow.baml

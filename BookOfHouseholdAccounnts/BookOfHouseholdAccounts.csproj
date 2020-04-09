@@ -111,6 +111,9 @@
     <Compile Include="AddAndEditTransactionWindow.xaml.cs">
       <DependentUpon>AddAndEditTransactionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddContractWindow.xaml.cs">
+      <DependentUpon>AddContractWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BankAccount.cs" />
     <Compile Include="Expense.cs" />
     <Compile Include="FilterTransactionsWindow.xaml.cs">
@@ -128,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddAndEditTransactionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddContractWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

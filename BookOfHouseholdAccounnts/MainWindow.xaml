@@ -91,11 +91,6 @@
                                     <Image Source="{Binding DeleteIconPath}"></Image>
                                 </StackPanel>
                             </Button>
-                            <!--<Button Grid.Column="1" VerticalAlignment="Top" Height="25" Width="25" Margin="1,130,0,0">
-                                <StackPanel>
-                                    <Image Source="{Binding EditIconPath}"></Image>
-                                </StackPanel>
-                            </Button>-->
                         </Grid>
                     </GroupBox>
                     <Separator Grid.Row="2" Grid.Column="0" VerticalAlignment="Top"/>
@@ -129,7 +124,31 @@
                     </lvc:CartesianChart>
                 </Grid>
             </TabItem>
-            <TabItem Name="tabItem_contracts" Header="Contracts" Width="100"></TabItem>
+            <TabItem Name="tabItem_contracts" Header="Contracts" Width="100">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="7*"></RowDefinition>
+                        <RowDefinition Height="93*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Column="0" Name="btn_addContract" Height="25" Width="80" HorizontalAlignment="Left" Margin="5,5,0,0" Click="btn_addContract_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding AddIconPath}"></Image>
+                            <TextBlock Text=" Contract  " VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <DataGrid Grid.Row="1" Name="dg_contracts" ItemsSource="{Binding Transactions}" AutoGenerateColumns="False" LoadingRow="dg_transactions_LoadingRow"
+                                      IsReadOnly="True" Margin="5,5,5,5" MouseDoubleClick="dg_transactions_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Width="20*" Binding="{Binding TransactionValue}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Value" Width="15*" Binding="{Binding Date}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Start" Width="15*" Binding="{Binding TransactionPartner}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="End" Width="15*" Binding="{Binding BankInstitute}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Cancel Period" Width="20*" Binding="{Binding BankInstitute}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Category" Width="20*" Binding="{Binding Category}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>

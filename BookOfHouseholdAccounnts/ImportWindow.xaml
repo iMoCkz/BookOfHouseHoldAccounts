@@ -19,8 +19,8 @@
         <Label Grid.Row="0" Grid.Column="0">File:</Label>
         <TextBox Grid.Row="0" Grid.Column="1" Name="txtbx_filePath" VerticalAlignment="Center" FontSize="10" IsReadOnly="True" Margin="0,0,5,0"></TextBox>
         <Button Grid.Row="0" Grid.Column="2" Name="btn_selectPath" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="17" Click="btn_selectPath_Click">...</Button>
-        <Label Grid.Row="1" Grid.Column="0">Bank:</Label>
-        <ComboBox Grid.Row="1" Grid.Column="1" Name="combobox_bankInstituteImport" ItemsSource="{Binding BankInstituteOptions}" DisplayMemberPath="Name" SelectedIndex="0" HorizontalAlignment="Left" Width="120"  Height="20" Margin="0,0,5,0"></ComboBox>
+        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Top">Bank:</Label>
+        <ComboBox Grid.Row="1" Grid.Column="1" Name="combobox_bankInstituteImport" ItemsSource="{Binding BankInstituteOptions}" DisplayMemberPath="Name" SelectedIndex="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120"  Height="22" Margin="0,0,5,0"></ComboBox>
         <Button Grid.Row="1" Grid.Column="2" Name="btn_import" Click="btn_import_Click" Margin="0,0,5,5">Import</Button>
     </Grid>
 </Window>
