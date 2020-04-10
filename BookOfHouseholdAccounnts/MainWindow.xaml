@@ -136,15 +136,15 @@
                             <TextBlock Text=" Contract  " VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <DataGrid Grid.Row="1" Name="dg_contracts" ItemsSource="{Binding Transactions}" AutoGenerateColumns="False" LoadingRow="dg_transactions_LoadingRow"
-                                      IsReadOnly="True" Margin="5,5,5,5" MouseDoubleClick="dg_transactions_MouseDoubleClick">
+                    <DataGrid Grid.Row="1" Name="dg_contracts" ItemsSource="{Binding Contracts}" AutoGenerateColumns="False" LoadingRow="dg_contracts_LoadingRow"
+                                      IsReadOnly="True" Margin="5,5,5,5" MouseDoubleClick="dg_contracts_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Width="20*" Binding="{Binding TransactionValue}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Value" Width="15*" Binding="{Binding Date}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Start" Width="15*" Binding="{Binding TransactionPartner}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="End" Width="15*" Binding="{Binding BankInstitute}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Cancel Period" Width="20*" Binding="{Binding BankInstitute}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Category" Width="20*" Binding="{Binding Category}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Name" Width="46*" Binding="{Binding Name}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Value" Width="7*" Binding="{Binding Value}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Start" Width="13*" Binding="{Binding StartDateStr}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="End" Width="13*" Binding="{Binding EndDateStr}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Period" Width="10*" Binding="{Binding CancellationPeriod}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Category" Width="11*" Binding="{Binding Category}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

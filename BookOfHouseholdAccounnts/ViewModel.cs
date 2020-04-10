@@ -109,11 +109,11 @@ namespace BookOfHouseholdAccounnts
         public ObservableCollection<BankInstituteView> BankInstituteOptions { get; set; } =
             new ObservableCollection<BankInstituteView>();
 
-        public string[] Labels { get; set; } = new[] { "A", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B" };
+        public ObservableCollection<Contract> Contracts { get; set; } =
+            new ObservableCollection<Contract>();
 
         public ObservableCollection<string> BudgetingOptions { get; set; } =
          new ObservableCollection<string>();
-
         public ObservableCollection<string> PeriodicityTimeUnit { get; set; } =
          new ObservableCollection<string>();
 

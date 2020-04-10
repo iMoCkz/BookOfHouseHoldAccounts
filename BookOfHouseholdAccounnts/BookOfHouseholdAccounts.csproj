@@ -115,6 +115,7 @@
       <DependentUpon>AddContractWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="BankAccount.cs" />
+    <Compile Include="Contract.cs" />
     <Compile Include="Expense.cs" />
     <Compile Include="FilterTransactionsWindow.xaml.cs">
       <DependentUpon>FilterTransactionsWindow.xaml</DependentUpon>

@@ -23,6 +23,7 @@ namespace BookOfHouseholdAccounnts
         #region Variables
         private ViewModel vwModel;
         private List<BankAccount> bankAccounts;
+        private List<Contract> contracts; 
         private bool isSavedData = true;
         private TransactionFilter transFilter, prevTransFilter;
         private ObservableValue value1;
@@ -51,6 +52,7 @@ namespace BookOfHouseholdAccounnts
             vwModel.PeriodicityTimeUnit = new ObservableCollection<string> { "Day(s)", "Week(s)", "Month(s)", "Quarter(s)", "Year(s)" };
 
             bankAccounts = new List<BankAccount>();
+            contracts = new List<Contract>(); 
             transFilter = new TransactionFilter();
         }
 
@@ -468,6 +470,21 @@ namespace BookOfHouseholdAccounnts
         }
 
         private void btn_addContract_Click(object sender, RoutedEventArgs e)
+        {
+            var newContractWindow = new AddContractWindow(vwModel);
+            if (newContractWindow.ShowDialog() ?? false)
+            {
+                contracts.Add(newContractWindow.Contract);
+                vwModel.Contracts.Add(newContractWindow.Contract);
+            }
+        }
+
+        private void dg_contracts_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void dg_contracts_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
 
         }
