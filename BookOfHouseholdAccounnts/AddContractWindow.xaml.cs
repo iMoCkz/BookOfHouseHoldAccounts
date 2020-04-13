@@ -22,15 +22,31 @@ namespace BookOfHouseholdAccounnts
     {
         private ViewModel vwModel; 
         public Contract Contract { get; set; }
+        private bool isEditing;
 
-        public AddContractWindow(ViewModel vwModel)
+        public AddContractWindow(ViewModel vwModel, Contract contract)
         {
             this.vwModel = vwModel;
             this.DataContext = vwModel;
 
-            InitializeComponent();
+            isEditing = !(contract == null);
 
-            if (vwModel.BudgetingOptions.Count > 0) combobox_category.SelectedIndex = 0;
+            InitializeComponent();
+            
+            if (isEditing)
+            {
+                Contract = contract;
+                txtBox_name.Text = Contract.Name;
+                txtBox_value.Text = Contract.Value.ToString();
+                datepicker_startDate.SelectedDate = Contract.StartDate;
+                datepicker_endDate.SelectedDate = Contract.EndDate;
+                txtBox_canellationPeriod.Text = Contract.CancellationPeriod.ToString(); 
+                combobox_category.SelectedIndex = vwModel.BudgetingOptions.ToList().FindIndex(budget => budget == Contract.Category);
+            }
+            else
+            {
+                if (vwModel.BudgetingOptions.Count > 0) combobox_category.SelectedIndex = 0;
+            }
         }
 
         private void txtBox_canellationPeriod_TextChanged(object sender, TextChangedEventArgs e)
@@ -54,13 +70,16 @@ namespace BookOfHouseholdAccounnts
               
         private void btn_addContract_Click(object sender, RoutedEventArgs e)
         {
-            Contract = new Contract();
+            if (!isEditing) Contract = new Contract();
+
             Contract.Name = txtBox_name.Text;
             Contract.Value = Convert.ToDouble(txtBox_value.Text);
             Contract.StartDate = (DateTime)datepicker_startDate.SelectedDate;
             Contract.EndDate = (DateTime)datepicker_endDate.SelectedDate;
             Contract.CancellationPeriod = Convert.ToDouble(txtBox_canellationPeriod.Text);
             Contract.Category = Convert.ToString(combobox_category.SelectedItem);
+
+            if (isEditing) ApplyChangesToView();
 
             DialogResult = true;
         }
@@ -69,5 +88,16 @@ namespace BookOfHouseholdAccounnts
         {
             DialogResult = false;
         }
+
+        private void ApplyChangesToView()
+        {
+            var viewElem = vwModel.Contracts.ToList().Find(ovrvw => ovrvw.ID == Contract.ID);
+
+            // 'Contract' class does not implement INotifyPropertyChanged.
+            // Hence changes in Contract object are not tracked - just changes in ObservableCollection<Contract>.
+            vwModel.Contracts.Remove(viewElem);
+            vwModel.Contracts.Add(Contract);
+        }
+
     }
 }

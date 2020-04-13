@@ -462,16 +462,45 @@ namespace BookOfHouseholdAccounnts
             {
                 this.Width = 900;
                 InitDiagrams();
+
             }
             else
-            {
+            {                
                 this.Width = 600;
+
+                if (tabItem_contracts.IsSelected) CheckExpirationOfContracts();                 
+            }
+        }
+
+        private void CheckExpirationOfContracts()
+        {
+            for (int i = 0; i < dg_contracts.Items.Count; i++)
+            {
+                DataGridRow row = (DataGridRow)dg_contracts.ItemContainerGenerator.ContainerFromIndex(i);
+
+                if (row != null)
+                {
+                    var currentContract = (Contract)row.Item;
+
+                    // Is the contract in a critical time period (1 month before automatic contract extension)?
+                    if ((currentContract.EndDate.AddMonths(-(int)Math.Ceiling(currentContract.CancellationPeriod) - 1) - DateTime.Now).TotalDays < 0)
+                    {
+                        if ((currentContract.EndDate.AddMonths(-(int)Math.Ceiling(currentContract.CancellationPeriod)) - DateTime.Now).TotalDays < 0) // Automatic contract extension 
+                        {
+                            row.Background = new SolidColorBrush(Color.FromRgb(252, 163, 159));
+                        }
+                        else // Remember user 1 month before the contract has to be declined
+                        {
+                            row.Background = new SolidColorBrush(Color.FromRgb(255, 250, 165));
+                        }
+                    }
+                }               
             }
         }
 
         private void btn_addContract_Click(object sender, RoutedEventArgs e)
         {
-            var newContractWindow = new AddContractWindow(vwModel);
+            var newContractWindow = new AddContractWindow(vwModel, null);
             if (newContractWindow.ShowDialog() ?? false)
             {
                 contracts.Add(newContractWindow.Contract);
@@ -482,11 +511,13 @@ namespace BookOfHouseholdAccounnts
         private void dg_contracts_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+            CheckExpirationOfContracts();
         }
 
         private void dg_contracts_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            var newContractWindow = new AddContractWindow(vwModel, (Contract)dg_contracts.SelectedItem);
+            newContractWindow.ShowDialog(); 
         }
 
         private void lbl_filterUnderscore_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)

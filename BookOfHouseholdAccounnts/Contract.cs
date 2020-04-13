@@ -36,5 +36,7 @@ namespace BookOfHouseholdAccounnts
                 endDate = value;
             }
         }
+        public string ID { get; set; } = Guid.NewGuid().ToString("N");
+
     }
 }

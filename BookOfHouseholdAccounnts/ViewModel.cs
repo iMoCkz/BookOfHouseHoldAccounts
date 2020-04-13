@@ -131,6 +131,17 @@ namespace BookOfHouseholdAccounnts
             }
         }
 
+        private DateTime prevCurrentDateTime = DateTime.Now.AddYears(-2);
+        public DateTime PrevCurrentDateTime
+        {
+            get { return prevCurrentDateTime; }
+            set
+            {
+                prevCurrentDateTime = value;
+                NotifyPropertyChanged("PrevCurrentDateTime");
+            }
+        }
+
         private string bankInstituteFilterContent;
         public string BankInstituteFilterContent
         { 

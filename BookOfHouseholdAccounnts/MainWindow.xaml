@@ -110,7 +110,7 @@
                         <ColumnDefinition Width="50*"></ColumnDefinition>
                         <ColumnDefinition Width="50*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <lvc:PieChart Grid.Row="0" Grid.Column="0" Name="pieChart_budgetingSeries" LegendLocation="Right" DataTooltip="{x:Null}" HoverPushOut="7"></lvc:PieChart>
+                    <lvc:PieChart Grid.Row="0" Grid.Column="1" Name="pieChart_budgetingSeries" LegendLocation="Right" DataTooltip="{x:Null}" Margin="0,0,50,0" HoverPushOut="7"></lvc:PieChart>
                     <lvc:CartesianChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="chartesianChart_transactionSeries" LegendLocation="Bottom" Margin="5,0,5,5">
                         <lvc:CartesianChart.DataTooltip>
                             <lvc:DefaultTooltip BulletSize="20" Background="Gray" IsWrapped ="true"/>

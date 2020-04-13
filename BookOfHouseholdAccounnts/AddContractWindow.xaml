@@ -28,9 +28,9 @@
         <Label Grid.Row="5" Grid.Column="0">Category</Label>
         <TextBox Grid.Row="0" Grid.Column="1" Name="txtBox_name" TextWrapping="Wrap" MaxLength="22" Height="50" VerticalAlignment="Top" Margin="0,5,10,0"></TextBox>
         <TextBox Grid.Row="1" Grid.Column="1" Name="txtBox_value" TextChanged="txtBox_value_TextChanged" VerticalAlignment="Top" Margin="0,5,10,0"></TextBox>
-        <DatePicker Grid.Row="2" Grid.Column="1" Name="datepicker_startDate" SelectedDate="{Binding CurrentDateTime}" VerticalAlignment="Center" Margin="0,0,10,0"></DatePicker>
+        <DatePicker Grid.Row="2" Grid.Column="1" Name="datepicker_startDate" SelectedDate="{Binding PrevCurrentDateTime}" VerticalAlignment="Center" Margin="0,0,10,0"></DatePicker>
         <DatePicker Grid.Row="3" Grid.Column="1" Name="datepicker_endDate" SelectedDate="{Binding CurrentDateTime}" VerticalAlignment="Center" Margin="0,0,10,0"></DatePicker>
-        <TextBox Grid.Row="4" Grid.Column="1" Name="txtBox_canellationPeriod" TextChanged="txtBox_canellationPeriod_TextChanged" Text="24" VerticalAlignment="Top" Margin="0,5,60,0"></TextBox>
+        <TextBox Grid.Row="4" Grid.Column="1" Name="txtBox_canellationPeriod" TextChanged="txtBox_canellationPeriod_TextChanged" Text="2" VerticalAlignment="Top" Margin="0,5,60,0"></TextBox>
         <Label Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,0">months</Label>
         <ComboBox Grid.Row="5" Grid.Column="1" Name="combobox_category" ItemsSource="{Binding BudgetingOptions}" Height="22" Margin="0,0,10,0"></ComboBox>
         <Button Grid.Row="10" Grid.Column="1" Name="btn_cancelContract" Click="btn_cancelContract_Click" HorizontalAlignment="Left" Width="50" Height="25" Margin="15,0,0,0">Cancel</Button>
