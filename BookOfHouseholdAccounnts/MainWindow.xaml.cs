@@ -26,7 +26,6 @@ namespace BookOfHouseholdAccounnts
         private List<Contract> contracts; 
         private bool isSavedData = true;
         private TransactionFilter transFilter, prevTransFilter;
-        private ObservableValue value1;
 
         public MainWindow()
         {
@@ -50,10 +49,16 @@ namespace BookOfHouseholdAccounnts
             vwModel.TransactionOptions = new ObservableCollection<string>() { "Groceries", "Housing", "Utilities", "Car", "Insurance", "ETF", "Stock",
                 "Shopping", "Dining Out", "Hobby", "Entertainment", "Cats", "Financial Aid", "Education", "Regular Work"};
             vwModel.PeriodicityTimeUnit = new ObservableCollection<string> { "Day(s)", "Week(s)", "Month(s)", "Quarter(s)", "Year(s)" };
+            cmbbx_budgetPrevious.SelectedIndex = 0;
 
             bankAccounts = new List<BankAccount>();
             contracts = new List<Contract>(); 
             transFilter = new TransactionFilter();
+        }
+
+        private void InitDiagramSettings()
+        {
+
         }
 
         private void InitDiagrams()
@@ -72,15 +77,18 @@ namespace BookOfHouseholdAccounnts
                 {
                     seriesValue += bkkAcc.Expenses.Where(expense => expense.BudgetingCategory == series).Sum(expense => expense.Value);
                 }
-
-                pieChart_budgetingSeries.Series.Add(new PieSeries { 
-                    Title = series, 
-                    Fill = pieChartColors[i++], 
-                    StrokeThickness = 0, 
-                    Values = new ChartValues<double> { seriesValue },
-                    DataLabels = true, 
-                    LabelPoint = PointLabel 
-                });
+                if (seriesValue != 0)
+                {
+                    pieChart_budgetingSeries.Series.Add(new PieSeries
+                    {
+                        Title = series,
+                        Fill = pieChartColors[i++],
+                        StrokeThickness = 0,
+                        Values = new ChartValues<double> { seriesValue },
+                        DataLabels = true,
+                        LabelPoint = PointLabel
+                    });
+                }                
             }
 
             chartesianChart_transactionSeries.Series.Clear();
@@ -93,7 +101,10 @@ namespace BookOfHouseholdAccounnts
                     seriesValue += bkkAcc.Incomes.Where(incomes => incomes.TransactionCategory == series).Sum(incomes => incomes.Value);
                 }
 
-                chartesianChart_transactionSeries.Series.Add(new ColumnSeries { Title = series, Values = new ChartValues<double> { seriesValue }, DataLabels=true, MaxColumnWidth=55 });
+                if (seriesValue != 0)
+                {
+                    chartesianChart_transactionSeries.Series.Add(new ColumnSeries { Title = series, Values = new ChartValues<double> { seriesValue }, DataLabels = true, MaxColumnWidth = 55 });
+                }
             }
             //chartesianChart_transactionSeries.Series[0].Values = new ChartValues<double> { 35 };
             //chartesianChart_transactionSeries.Series[0].Values[0] = 15.0;
@@ -461,8 +472,8 @@ namespace BookOfHouseholdAccounnts
             if (tabItem_evaluation.IsSelected)
             {
                 this.Width = 900;
-                InitDiagrams();
 
+                InitDiagrams();
             }
             else
             {                
@@ -518,6 +529,11 @@ namespace BookOfHouseholdAccounnts
         {
             var newContractWindow = new AddContractWindow(vwModel, (Contract)dg_contracts.SelectedItem);
             newContractWindow.ShowDialog(); 
+        }
+
+        private void btn_budgetingCategoryFilter_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void lbl_filterUnderscore_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)

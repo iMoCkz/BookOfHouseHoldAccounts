@@ -107,10 +107,37 @@
                         <RowDefinition Height="50*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50*"></ColumnDefinition>
-                        <ColumnDefinition Width="50*"></ColumnDefinition>
+                        <ColumnDefinition Width="45*"></ColumnDefinition>
+                        <ColumnDefinition Width="55*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <lvc:PieChart Grid.Row="0" Grid.Column="1" Name="pieChart_budgetingSeries" LegendLocation="Right" DataTooltip="{x:Null}" Margin="0,0,50,0" HoverPushOut="7"></lvc:PieChart>
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50*"></RowDefinition>
+                            <RowDefinition Height="50*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <GroupBox Grid.Row="0" Header="Budgeting Category">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="23*"></RowDefinition>
+                                    <RowDefinition Height="30*"></RowDefinition>
+                                    <RowDefinition Height="23*"></RowDefinition>
+                                    <RowDefinition Height="24*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <RadioButton Grid.Row="2" Name="rdbtn_budgetPrevious" VerticalAlignment="Center">Previous</RadioButton>
+                                <ComboBox Grid.Row="3" Name="cmbbx_budgetPrevious" HorizontalAlignment="Left" ItemsSource="{Binding BudgetingOptions}" Width="90" Margin="30,0,0,0"></ComboBox>
+                                <RadioButton Grid.Row="0" Name="rdbtn_budgetIntervall" VerticalAlignment="Center">Intervall</RadioButton>
+                                <Label Grid.Row="1" HorizontalAlignment="Left" Margin="30,0,0,0">From</Label>
+                                <DatePicker Grid.Row="1" Name="dtpckr_budgetStart" HorizontalAlignment="Left" Width="130" Margin="75,0,0,0"></DatePicker>
+                                <Label Grid.Row="1" HorizontalAlignment="Left" Margin="207,0,0,0">To</Label>
+                                <DatePicker Grid.Row="1" Name="dtpckr_budgetEnd" HorizontalAlignment="Right" Width="130" Margin="0,0,20,0"></DatePicker>
+                                <Button Grid.Row="3" Name="btn_budgetingCategoryFilter" Click="btn_budgetingCategoryFilter_Click" Width="50" HorizontalAlignment="Right" Margin="0,0,5,0">Apply</Button>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Grid.Row="1" Header="Transaction Category">
+
+                        </GroupBox>
+                    </Grid>
+                    <lvc:PieChart Grid.Row="0" Grid.Column="1" Name="pieChart_budgetingSeries" LegendLocation="Right" DataTooltip="{x:Null}" HoverPushOut="7"></lvc:PieChart>
                     <lvc:CartesianChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="chartesianChart_transactionSeries" LegendLocation="Bottom" Margin="5,0,5,5">
                         <lvc:CartesianChart.DataTooltip>
                             <lvc:DefaultTooltip BulletSize="20" Background="Gray" IsWrapped ="true"/>
